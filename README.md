@@ -7,6 +7,29 @@ userAuth does a basic user authentication.
 3. npm install
 4. open the config.env file and add your DB url
 5. npm start (or) nodemon server.js
+6. Open postman and start testing..
+
+# Postman requests
+1. To signup a user : 
+    http://localhost:3000/signup
+    payload: 
+        {
+        "username": "admin1",
+        "password": "Welcome1",
+        "name": "Admin first User"
+        }
+2. To login a user :
+    http://localhost:3000/signin
+    payload:
+        {
+        "username": "admin1",
+        "password": "Welcome1"
+        }
+3. To get list of users :
+    http://localhost:3000/users
+4. To signout :
+    http://localhost:3000/signout
+
 
 # What userAuth can do?
 1. Signup a new user
