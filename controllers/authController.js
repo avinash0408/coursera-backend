@@ -68,10 +68,3 @@ exports.authenticate = async(req,res,next)=>{
 exports.logout = async(req,res)=>{
     res.clearCookie("access_token").status(200).json({ message: "Successfully logged out" });
 }
-
-exports.fetchUsers = async(req,res)=>{
-    let users = await userModel.find({});
-    res.status(200).json({
-        users
-    });
-}
