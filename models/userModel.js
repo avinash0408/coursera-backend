@@ -5,11 +5,11 @@ const userSchema = mongoose.Schema({
     username : String,
     password : String,
     name : String,
-    createdOn: { type: Date, default: Date.now },
-    purchasedCourses : [{
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Courses'
-    }]
+    createdOn: { type : Date, default: Date.now },
+    isAdmin : { type : Boolean, default: false },
+    purchasedCourses : [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Courses' }
+    ]
 });
 
 userSchema.pre('save',async function(next){

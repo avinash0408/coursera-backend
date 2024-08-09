@@ -6,17 +6,18 @@ exports.signup = async(req,res)=>{
     const userName = req.body.username;
     const password = req.body.password;
     const name = req.body.name; 
+    const isAdmin = req.body.isAdmin;
     const existingUser = await userModel.findOne({username:userName});
 
     if(existingUser){
         return res.status(400).json({
-            'msg': `User with username ${userName} already exists. Please try with different username`
+            message : `User with username ${userName} already exists. Please try with different username`
         })
     }
-    await userModel.create({name,username:userName,password});
+    await userModel.create({name,username:userName,password,isAdmin});
 
     res.status(201).json({
-        "msg": `User ${userName} created successfully..!`
+        message : `User ${userName} created successfully..!`
     });
 
 }
@@ -28,7 +29,7 @@ exports.login = async(req,res)=>{
     const existingUser = await userModel.findOne({username:userName});
     if(!existingUser){
          res.status(400).json({
-            'msg': `User with username ${userName} doesn't exist. Please Signup to continue..!`
+            message : `User with username ${userName} doesn't exist. Please Signup to continue..!`
         })
     }
     else if(await existingUser.comparePasswords(password)){
@@ -36,13 +37,13 @@ exports.login = async(req,res)=>{
             res.cookie("access_token", token, {
                 httpOnly: true
               }).status(200).json({
-                'msg':`Welcome ${userName}`,
+                message :`Welcome ${userName}`,
                 token
             });
     }
     else{
         res.status(400).json({
-            'msg': `Please enter valid password for user ${userName}`
+            message : `Please enter valid password for user ${userName}`
         })
     }
 }
@@ -52,11 +53,13 @@ exports.authenticate = async(req,res,next)=>{
     try{
         const decoded = await jwt.verify(token,jwtPassword);
         const uid = decoded.id;
-        let user = await userModel.findOne({_id:uid},'username -_id');
+        let user = await userModel.findOne({_id:uid},'username isAdmin -_id');
         req.username = user.username;
+        req.userId = uid;
+        req.isAdmin = user.isAdmin;
         if(!user){
             res.status(400).json({
-                'msg':"Invalid token passed! please try again..!"
+                message : "Invalid token passed! please try again..!"
             });
         }
     }catch(err){
@@ -65,6 +68,6 @@ exports.authenticate = async(req,res,next)=>{
     next();
 }
 
-exports.logout = async(req,res)=>{
+exports.logout = (req,res)=>{
     res.clearCookie("access_token").status(200).json({ message: "Successfully logged out" });
 }
