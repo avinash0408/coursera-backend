@@ -9,7 +9,7 @@ This project is to develop backend functionality for Coursera kindof application
 5. npm start (or) nodemon server.js
 6. Open postman and start testing..
 
-#postman requests
+# Postman requests
 1.Signup user - http://localhost:3000/signup
     sample payload :    {
                             "username": "user2",
