@@ -10,14 +10,15 @@ This project is to develop backend functionality for Coursera kindof application
 6. Open postman and start testing..
 
 # Postman requests
-1.Signup user - http://localhost:3000/signup
+1. Signup user - http://localhost:3000/signup
     sample payload :    {
                             "username": "user2",
                             "password": "Welcome1",
                             "name": "second  User"
                         }
 {for admin user please pass isAdmin:true in payload}
-2.Signin user - http://localhost:3000/signin
+
+2. Signin user - http://localhost:3000/signin
     sample payload :    {
                             "username": "user2",
                             "password": "Welcome1"
